@@ -1,0 +1,19 @@
+{
+  "name": "baymax-css3",
+  "version": "1.0.0",
+  "description": "Baymax x CSS3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Polaris Chen",
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "^2.9.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.0.2",
+    "postcss-cli": "^2.1.0",
+    "postcss-import": "^7.0.0"
+  }
+}

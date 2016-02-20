@@ -1,0 +1,234 @@
+@charset "utf-8";
+
+$temp-color: #567;
+$white-color: #FFF;
+$black-color: #000;
+$shadow-color: #5E6764;
+
+@mixin block-center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@mixin bm-part($w, $h, $r1, $r2, $color: $white-color) {
+	width: $w + px;
+	height: $h + px;
+	border-radius: $r1 $r1 $r2 $r2;
+	background-color: $color;
+}
+@mixin bm-part-d($w, $r1, $r2, $color: $white-color) {
+	@include bm-part($w, $w, $r1, $r2, $color);
+}
+@mixin bm-part-o($w, $r: 50%, $color: $white-color) {
+	@include bm-part($w, $w, $r, $r, $color);
+}
+
+
+@mixin transform($y, $r: 0, $up: true) {
+	@if $up { $y: -$y; }
+	transform: translateY($y) rotate($r + deg);
+}
+
+@mixin up($d) {
+	@include transform($d);
+}
+@mixin down($d) {
+	@include transform($d, $up: false);
+}
+@mixin rotate($d) {
+	@include transform(0, $d);
+}
+
+@mixin z($level) {
+	position: relative;
+	z-index: $level;
+}
+
+%shadow {
+	box-shadow: 0 2px 60px 0 lighten($black-color, 80%);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-size: 0;
+	background: {
+		size: cover;
+		position: center;
+		color: #DDD;
+		// image: url(../images/baymax1.jpg);
+	}
+	width: auto;
+	height: 400px;
+}
+
+header {
+	position: fixed;
+	width: 100%;
+	height: 48px;
+	background-color: lighten($shadow-color, 70%);
+	color: $shadow-color;
+	font-size: 14px;
+	text-align: center;
+	line-height: 48px;
+	z-index: 1000;
+	@extend %shadow;
+}
+a {
+	color: $shadow-color;
+	&:hover {
+		color: $black-color;
+	}
+}
+
+.baymax {
+  @include block-center;
+	width: 768px;
+	height: 700px;
+	padding-top: 80px;
+	text-align: center;
+	overflow: hidden;
+	.head {
+		@include block-center;
+		@include bm-part(108, 74, 50%, 44%);
+		padding: 28px 24px;
+  	@include down(20%);
+  	box-shadow: 0 1px 10px 0 lighten($black-color, 90%);
+		@include z(100);
+		%eye {
+			display: inline-block;
+			@include bm-part-o(14, $color: $black-color);
+		}
+		.eye-left {
+			@extend %eye;
+		}
+		.eye-right {
+			@extend %eye;
+		}
+		.eye-line {
+			display: inline-block;
+			width: 32px;
+			height: 3px;
+			background-color: $black-color;
+  		@include up(5px);
+		}
+	}
+	.body {
+		@include block-center;
+		width: 340px;
+		height: 440px;
+		text-align: center;
+		%body {
+			display: inline-block;
+  		@extend %shadow;
+		}
+		.body-top {
+			@extend %body;
+			@include bm-part-d(214, 48%, 40%);
+			@include z(2);
+		}
+		.body-middle {
+			@extend %body;
+			@include bm-part-o(250);
+  		@include up(60%);
+			@include z(1);
+		}
+		.body-bottom {
+			@extend %body;
+			@include bm-part-o(280);
+  		@include up(130%);
+			@include z(2);
+		}
+		.body-top-cover {
+			display: inline-block;
+			@include bm-part-d(214, 48%, 40%);
+  		@include up(330%);
+			@include z(3);
+		}
+		.body-middle-cover {
+			display: inline-block;
+			@include bm-part-o(246);
+  		@include up(362%);
+			@include z(3);
+		}
+		.sim {
+			margin-left: 205px;
+			@include bm-part-o(32);
+  		@include up(3600%);
+			@include z(4);
+			box-shadow: 0 2px 5px 0 lighten($black-color, 95%);
+		}
+	}
+	%hand {
+		.arm {
+			margin-left: 104px;
+			@include bm-part(300, 90, 60%, 50px);
+			@include transform(350%, -66);
+			@include z(-100);
+			@extend %shadow;
+		}
+		.fingers {
+			width: 100px;
+			height: auto;
+			margin-left: 174px;
+			@include transform(490%, -95);
+			@include z(-100);
+			%finger {
+				@include bm-part(60, 18, 60%, 10px);
+				@include z(-200);
+			}
+			.finger-1 {
+				@extend %finger;
+			}
+			.finger-2 {
+				@extend %finger;
+				@include transform(140%, -10);
+			}
+			.finger-3 {
+				margin-left: 10px;
+				@include bm-part(60, 18, 10px, 60%);
+				@include transform(100%, -10);
+				@include z(1300);
+			}
+		}
+	}
+	.hand-left {
+		@extend %hand;
+	}
+	.hand-right {
+		@extend %hand;
+		transform: translate(-2px, -100%) scaleX(-1);
+	}
+	.feet {
+		@include block-center;
+		width: 300px;
+		@include up(200%);
+		%foot {
+			@include bm-part(200, 100, 60%, 30px);
+			@include z(-100);
+			@extend %shadow;
+		}
+		.foot-left {
+			@extend %foot;
+			@include transform(0, -90);
+			@include z(-99);
+		}
+		.foot-right {
+			margin-left: 101px;
+			@extend %foot;
+			@include transform(100%, 90);
+		}
+	}
+
+	.ground {
+		@include block-center;
+		@include bm-part(320, 2, 50%, 50%, $shadow-color);
+		@include up(22500%);
+		@include z(-300);
+		box-shadow: 0 0 20px 30px $shadow-color;
+	}
+
+}
